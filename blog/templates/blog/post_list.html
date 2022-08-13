@@ -1,0 +1,27 @@
+{% extends "blog/index.html" %}
+
+
+{% block content %}
+    {% block category %}
+    <h1>Категории!</h1>
+    {% if categories %}
+    <ul>
+        {% for category in categories %}
+            <li>{{ category.name }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+            <strong>Нет записей!</strong>
+    {% endif %}
+{% endblock %}
+    <a href="{% url 'post-create' %}"><li><button class="btn btn-info"><i class="fas fa-plus-circle"></i>Добавить запись</button></li></a>
+  <ul>
+   {% for post in object_list %}
+       <li><a href="/posts/{{post.pk}}">{{ post.published_date|date }} - {{ post.title }}</a></li>
+{% empty %}
+    <li>Пока нет поста.</li>
+{% endfor %}
+  </br><li><a href="/home/signup/">Регистрация</a></li>
+      <li><a href="/accounts/login/">Авторизация</a></li>
+</ul>
+{% endblock %}

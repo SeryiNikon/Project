@@ -1,0 +1,36 @@
+{% extends "blog/index.html" %}
+
+{% block content %}
+<h1>{{ object.title }}</h1>
+<p>{{ object.text }}</p>
+<p>author: {{ object.author }}</p>
+<p>published_date: {{ object.published_date|date }}</p>
+<p>create_date: {{ now|date }}</p>
+
+    <hr>
+
+    <p>Добавить комментарий</p>
+    <div class="col-4">
+    <form action="{% url 'post-comment' object.id %}" id="add_form" method="post">
+        {% csrf_token %}
+        {{ comment_form }}
+    </form>
+
+    <button form="add_form" type="submit" class="btn.btn-primary">Добавить</button>
+    </div>
+<ul>
+
+    {% for item in comments %}
+        <li>
+        Дата создания:{{ item.create_date }}<br>
+        Автор статьи:{{ item.author }}<br>
+        Статус статьи:{{ item.status }}<br><br>
+        {{ item.text }}
+        </li>
+    {% endfor %}
+</ul>
+
+    <a href="{% url 'post-delete' post.id  %}" class="btn btn-danger">Удалить</a><br>
+    <a href="{% url 'post-update' post.id  %}" class="btn btn-info">Редактировать</a><br>
+    <a href='/'>Назад</a>
+{% endblock %}

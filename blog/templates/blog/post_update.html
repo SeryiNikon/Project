@@ -1,0 +1,14 @@
+{% extends 'blog/index.html' %}
+
+
+{% block content %}
+    <div class="features">
+        <h1>Форма по добавлению статьи</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            {{ blog_post.author_id }}
+            <button class="btn btn-success" type="submit">Обновить статью</button>
+        </form>
+    </div>
+{% endblock %}
