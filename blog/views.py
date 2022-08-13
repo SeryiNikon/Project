@@ -79,7 +79,6 @@ class Index(TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super().get_context_data(*args, **kwargs)
         context['categories'] = Category.objects.all()
-        Post.objects.filter(postCategory__id=self.kwargs['pk'])
         return context
 
 
