@@ -2,16 +2,30 @@
 
 
 {% block content %}
-    <h1>Категории!</h1>
-    {% if categories %}
-    <ul>
-        {% for category in categories %}
-            <li>{{ category.name }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-            <strong>Нет записей!</strong>
-    {% endif %}
+{% regroup object_list by category as post_list %}
+
+<ul>
+    {% for post_category in post_list %}
+        <li>{{ post_category.grouper }}
+            <ul>
+            {% for post in post_category.list %}
+                <li><a href="/{{category.pk}}">{{ post.title }}</a></li>
+            {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>
+
+{#    <h1>Категории!</h1>#}
+{#    {% if categories %}#}
+{#    <ul>#}
+{#        {% for category in categories %}#}
+{#            <li>{{ category.name }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#    {% else %}#}
+{#            <strong>Нет записей!</strong>#}
+{#    {% endif %}#}
 
     <a href="{% url 'post-create' %}"><li><button class="btn btn-info"><i class="fas fa-plus-circle"></i>Добавить запись</button></li></a>
   <ul>

@@ -1,5 +1,3 @@
-from multiprocessing.reduction import register
-
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.utils import timezone
@@ -7,12 +5,10 @@ from django.views.generic import DeleteView, UpdateView, CreateView, TemplateVie
 from django.views.generic.edit import FormMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.http import HttpResponseRedirect
-from django.contrib.auth.models import User
 from blog.forms import PostForm, CommentForm
 from blog.models import Post, Comments, Category
 from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 
 
@@ -73,13 +69,28 @@ class PostDeleteView(DeleteView):
     template_name = 'blog/post_delete.html'
 
 
-class Index(TemplateView):
-    template_name = "post_list.html"
+# class Index(TemplateView):
+#     template_name = "post_list.html"
+#
+#     def get_context_data(self, *args, **kwargs):
+#         context = super().get_context_data(*args, **kwargs)
+#         context['categories'] = Category.objects.all()
+#         return context
 
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        context['categories'] = Category.objects.all()
-        return context
+class CategoryList(ListView):
+    template_name = 'blog/post_list.html'
+
+    def get_queryset(self):
+        return Post.objects.all().select_related('category')
+
+# def post_list(request, category_slug=None):
+#     category = None
+#     categories = Category.objects.all()
+#     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
+#     if category_slug:
+#         category = get_object_or_404(Category, slug=category_slug)
+#         posts = posts.filter(category=category)
+#     return render(request, 'blog/list.html', {'category': category, 'categories': categories, 'posts': posts})
 
 
 class CustomSuccessMessageMixin:

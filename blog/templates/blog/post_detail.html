@@ -23,8 +23,7 @@
     {% for item in comments %}
         <li>
         Дата создания:{{ item.create_date }}<br>
-        Автор статьи:{{ item.author }}<br>
-        Статус статьи:{{ item.status }}<br><br>
+        Автор статьи:{{ item.author }}<br><br>
         {{ item.text }}
         </li>
     {% endfor %}

@@ -6,7 +6,7 @@ from django.db import models
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=64, db_index=True)
+    name = models.CharField(max_length=64, db_index=True, blank=True, null=True)
 
     class Meta:
         ordering = ('name',)
@@ -23,7 +23,8 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, blank=True, null=True)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category', blank=True, null=True)
+
 
     def publish(self):
         self.published_date = timezone.now()
