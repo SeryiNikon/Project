@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 from blog import views
-from blog.views import PostCommentView, PostListView, PostDetailView, PostUpdateView, PostCreateView, PostDeleteView
+from blog.views import PostCommentView, PostListView, PostDetailView, PostUpdateView, PostCreateView, PostDeleteView, \
+    CategoryList, CategoryDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,8 @@ urlpatterns = [
     path('home/', views.home, name="home"),
     path('home/signup/', views.SignUp.as_view(), name="signup"),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('categories/', CategoryList.as_view(), name='category-list'),
+    path('categories/<int:pk>/', CategoryDetail.as_view(), name='category-detail'),
 
     # path('/login', LoginView.as_view(), name='login'),
 ]
