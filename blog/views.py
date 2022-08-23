@@ -74,10 +74,20 @@ class CategoryList(ListView):
     context_object_name = 'categories'
     template_name = 'blog/category_list.html'
 
+    def get_queryset(self):
+        return Category.objects.all()
+
 
 class CategoryDetail(DetailView):
     model = Category
-    template_name = 'blog/category_detail.html'
+    # categories = Category.objects.all()
+    # context_object_name = 'categories'
+    # template_name = 'blog/category_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['posts'] = Post.objects.filter(category__pk=kwargs['object'].pk)
+        return context
 
 
 class CustomSuccessMessageMixin:

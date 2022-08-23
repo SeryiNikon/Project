@@ -2,7 +2,9 @@
 
 
 {% block content %}
-{% for category in post.categories.all %}
-                <h2 class="title"> {{category.title}} </h2>
-                {% endfor %}
+    <ul>
+        {% for post in posts %}
+    <li><a href="{% url 'post-detail' post.id %}">{{post.title}}</a></li>
+{% endfor %}
+    </ul>
 {% endblock %}

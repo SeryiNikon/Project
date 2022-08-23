@@ -16,6 +16,9 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
+    def get_posts(self):
+        return Category.objects.filter(category=self)
+
 
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -23,8 +26,7 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='category', blank=True, null=True)
-
+    category = models.ManyToManyField(Category, related_name='posts')
 
     def publish(self):
         self.published_date = timezone.now()
@@ -39,7 +41,7 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
-        ordering = ['-published_date']
+        ordering = ['title']
 
 
 class Comments(models.Model):
@@ -48,6 +50,6 @@ class Comments(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор комментария', blank=True, null=True)
     create_date = models.DateTimeField(auto_now=True)
     text = models.TextField(verbose_name='Текст комментария')
-    status = models.BooleanField(verbose_name='Видимость статьи', default=False)
+    status = models.BooleanField(verbose_name='Видимость статьи', default=True)
 
 

@@ -2,16 +2,6 @@ from django.forms import ModelForm, CharField, DateTimeField, Textarea, DateInpu
 
 from blog.models import Post, Comments
 
-from django.contrib.auth.models import User
-
-# class LoginForm(ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ['username', 'password']
-#
-#     username = CharField(label="Логин")
-#     password = CharField(label="Пароль")
-
 
 class PostForm(ModelForm):
     class Meta:

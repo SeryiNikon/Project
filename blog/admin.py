@@ -11,5 +11,5 @@ from blog.models import Post, Category
 #     list_display = ['category', ]
 #
 #
-# admin.site.register(Category, CategoryAdmin)
+admin.site.register(Category)
 admin.site.register(Post)
